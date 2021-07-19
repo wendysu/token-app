@@ -1,9 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import appReducers from '../reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import tokenReducer from '../features/tokens/tokenReducer';
 
-const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
-const store = createStore(appReducers, composedEnhancer);
-
-export default store;
+export default configureStore({
+  reducer: {
+    tokens: tokenReducer
+  }
+});

@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { map, prop } from 'ramda';
 
-import { apiOnSuccess, tokenRemove } from './actions';
+import { tokenFetched, tokenRemove } from './features/tokens/tokenReducer';
 import CreateToken from './components/CreateToken';
 import './App.css';
 
@@ -22,12 +22,12 @@ const App = () => {
     (async () => {
       const response = await apiFetch('/token.json');
 
-      dispatch(apiOnSuccess(response.tokens));
+      dispatch(tokenFetched(response.tokens));
     })();
   }, [dispatch]);
 
   const tokens = useSelector(state => state.tokens);
-  const usedTokenNames = useMemo(() => map(prop('name'), tokens), [tokens]);
+  const usedTokenNames = useMemo(() => tokens && map(prop('name'), tokens), [tokens]);
   
   return (
     <div className="App">
@@ -60,7 +60,7 @@ const App = () => {
                   <td>{toReadableDate(expiryDate)}</td>
                   <td>{isExpired.toString()}</td>
                   <td>
-                    {!isExpired && <button onClick={onRemoveToken}>Remove</button>}
+                    <button onClick={onRemoveToken}>Remove</button>
                   </td>
                 </tr>
               );

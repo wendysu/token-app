@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidV4 } from 'uuid';
 import { includes, isEmpty } from 'ramda';
 
-import { tokenCreate } from '../actions';
+import { tokenCreate } from '../features/tokens/tokenReducer';
 import './CreateToken.css';
 
 /**
